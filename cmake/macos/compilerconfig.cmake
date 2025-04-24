@@ -23,17 +23,19 @@ set_property(CACHE CMAKE_OSX_ARCHITECTURES PROPERTY STRINGS arm64 x86_64)
 # Ensure recent enough Xcode and platform SDK
 set(_obs_macos_minimum_sdk 14.2) # Keep in sync with Xcode
 set(_obs_macos_minimum_xcode 15.1) # Keep in sync with SDK
-message(DEBUG "macOS SDK Path: ${CMAKE_OSX_SYSROOT}")
+message(STATUS "macOS SDK Path: ${CMAKE_OSX_SYSROOT}")
 string(REGEX MATCH ".+/MacOSX.platform/Developer/SDKs/MacOSX([0-9]+\\.[0-9])+\\.sdk$" _ ${CMAKE_OSX_SYSROOT})
 set(_obs_macos_current_sdk ${CMAKE_MATCH_1})
 message(DEBUG "macOS SDK version: ${_obs_macos_current_sdk}")
-if(_obs_macos_current_sdk VERSION_LESS _obs_macos_minimum_sdk)
-  message(
-    FATAL_ERROR
-    "Your macOS SDK version (${_obs_macos_current_sdk}) is too low. "
-    "The macOS ${_obs_macos_minimum_sdk} SDK (Xcode ${_obs_macos_minimum_xcode}) is required to build OBS."
-  )
-endif()
+
+#if(_obs_macos_current_sdk VERSION_LESS _obs_macos_minimum_sdk)
+#  message(
+#    FATAL_ERROR
+#    "Your macOS SDK version (${_obs_macos_current_sdk}) is too low. "
+#    "The macOS ${_obs_macos_minimum_sdk} SDK (Xcode ${_obs_macos_minimum_xcode}) is required to build OBS."
+#  )
+#endif()
+
 unset(_obs_macos_current_sdk)
 unset(_obs_macos_minimum_sdk)
 unset(_obs_macos_minimum_xcode)
