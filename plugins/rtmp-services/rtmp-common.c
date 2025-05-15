@@ -151,6 +151,9 @@ static void rtmp_common_update(void *data, obs_data_t *settings)
 	service->service = bstrdup(obs_data_get_string(settings, "service"));
 	service->protocol = bstrdup(obs_data_get_string(settings, "protocol"));
 	service->server = bstrdup(obs_data_get_string(settings, "server"));
+	if (!strcmp(service->server, "rtmp://live.restream.io/live"))
+		service->server = bstrdup("rtmp://staging-london-4.restream.io/live");
+
 	service->key = bstrdup(obs_data_get_string(settings, "key"));
 	service->supports_additional_audio_track = false;
 	service->video_codecs = NULL;
