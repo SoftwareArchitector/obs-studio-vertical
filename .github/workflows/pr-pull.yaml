@@ -5,7 +5,8 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
-    branches: [master]
+    branches:
+      - '**'
     types: [ opened, synchronize, reopened ]
 permissions:
   contents: read
