@@ -26,7 +26,7 @@ function(set_target_properties_obs target)
   set(multiValueArgs PROPERTIES)
   cmake_parse_arguments(PARSE_ARGV 0 _STPO "${options}" "${oneValueArgs}" "${multiValueArgs}")
 
-  message(DEBUG "Setting additional properties for target ${target}...")
+  message(STATUS "Setting additional properties for target ${target}...")
 
   while(_STPO_PROPERTIES)
     list(POP_FRONT _STPO_PROPERTIES key value)
