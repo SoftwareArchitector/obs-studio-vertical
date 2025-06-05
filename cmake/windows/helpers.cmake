@@ -11,7 +11,7 @@ function(set_target_properties_obs target)
   set(multiValueArgs PROPERTIES)
   cmake_parse_arguments(PARSE_ARGV 0 _STPO "${options}" "${oneValueArgs}" "${multiValueArgs}")
 
-  message(DEBUG "Setting additional properties for target ${target}...")
+  message(STATUS "Setting additional properties for target ${target}...")
 
   while(_STPO_PROPERTIES)
     list(POP_FRONT _STPO_PROPERTIES key value)
@@ -19,6 +19,8 @@ function(set_target_properties_obs target)
   endwhile()
 
   get_target_property(target_type ${target} TYPE)
+
+  message(STATUS "Windows target_type: ${target_type}")
 
   if(target_type STREQUAL EXECUTABLE)
     if(target STREQUAL obs-browser-helper)
@@ -107,7 +109,7 @@ function(set_target_properties_obs target)
         COMPONENT Runtime
       )
     elseif(${target} STREQUAL obs-browser)
-      message(DEBUG "Add Chromium Embedded Framework to project for obs-browser plugin...")
+      message(STATUS "Add Chromium Embedded Framework to project for obs-browser plugin...")
       if(TARGET CEF::Library)
         get_target_property(imported_location CEF::Library IMPORTED_LOCATION_RELEASE)
 
@@ -300,7 +302,7 @@ endfunction()
 
 # Helper function to add resources into bundle
 function(target_install_resources target)
-  message(DEBUG "Installing resources for target ${target}...")
+  message(STATUS "Installing resources for target ${target}...")
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/data")
     file(GLOB_RECURSE data_files "${CMAKE_CURRENT_SOURCE_DIR}/data/*")
     foreach(data_file IN LISTS data_files)
@@ -358,7 +360,7 @@ function(target_add_resource target resource)
     set(target_destination "${OBS_DATA_DESTINATION}/${target}")
   endif()
 
-  message(DEBUG "Add resource '${resource}' to target ${target} at destination '${target_destination}'...")
+  message(STATUS "Add resource '${resource}' to target ${target} at destination '${target_destination}'...")
 
   install(FILES "${resource}" DESTINATION "${target_destination}" COMPONENT Runtime)
 
@@ -377,7 +379,7 @@ endfunction()
 
 # _bundle_dependencies: Resolve third party dependencies and add them to Windows binary directory
 function(_bundle_dependencies target)
-  message(DEBUG "Discover dependencies of target ${target}...")
+  message(STATUS "Discover dependencies of target ${target}...")
   set(found_dependencies)
   find_dependencies(TARGET ${target} FOUND_VAR found_dependencies)
 
